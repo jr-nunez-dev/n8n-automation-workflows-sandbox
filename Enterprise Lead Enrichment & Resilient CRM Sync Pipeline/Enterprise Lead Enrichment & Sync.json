@@ -153,14 +153,14 @@
           "value": "1Km4HH933wqmu0z_S1IYP1aapa-Axz5jQ6IL72KAQjyc",
           "mode": "list",
           "cachedResultName": "Mock Data",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Km4HH933wqmu0z_S1IYP1aapa-Axz5jQ6IL72KAQjyc/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Km4HH933wqmu0z_S1IYfdP1aapa-Axz5jQ6IL72KAQjyc/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Low Priority Log",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Km4HH933wqmu0z_S1IYP1aapa-Axz5jQ6IL72KAQjyc/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Km4HH933wqmusdf0z_S1IYP1aapa-Axz5jQ6IL72KAQjyc/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -891,7 +891,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://chat.googleapis.com/v1/spaces/AAQAgFTD0iI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=IpHLLyUJcB_teQeVixAF0kzz4wfNuSPkBvMJ2tIFE0w",
+        "url": "https://chat.googleapis.com/v1/spaces/AAQAgFTD0iI/messages?key=yourAPIhere&token=isfjgfldjgrejkasfg_P4Y9d3-4oWh7r0",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"text\": \"🚨 *Enterprise Lead Synced Successfully* 🚀\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n• *Lead Name:* {{ $json.name }}\\n• *Company:* {{ $json.company }} ({{ $json.employeeCount }} employees)\\n• *Region:* {{ $json.region }} | *Tier:* {{ $json.lead_tier }}\\n• *Enriched Score:* {{ $json.lead_score }}/100\\n\\n*System Metadata:*\\n• *CRM Record ID:* {{ $json.crm_id }}\\n• *Sync Timestamp:* {{ $json.synced_at }}\\n• *GDPR Compliant:* {{ $json.gdpr_compliant || 'N/A (Non-EU)' }}\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\"\n}",
@@ -909,7 +909,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://chat.googleapis.com/v1/spaces/AAQAgFTD0iI/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=IpHLLyUJcB_teQeVixAF0kzz4wfNuSPkBvMJ2tIFE0w",
+        "url": "https://chat.googleapis.com/v1/spaces/AAQAgFTD0iI/messages?key=yourAPIhere&token=isfjgfldjgrejkasfg_P4Y9d3-4oWh7r0",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"text\": \"⚠️ *CRITICAL: Enterprise Sync Failure* 🛑\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\\n*Failed Lead Diagnostics:*\\n• *Lead ID:* {{ $json.id }}\\n• *Lead Name:* {{ $json.name }}\\n• *Company:* {{ $json.company }}\\n• *Region:* {{ $json.region }}\\n\\n*Error Log Details:*\\n• *Incident Report:* {{ $json.error_message }}\\n• *Action Taken:* Automatically retried (1x) -> Gateway Timeout Exhausted.\\n• *Status:* Routed to Dead Letter Queue for manual review.\\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\"\n}",
@@ -932,14 +932,14 @@
           "value": "1Km4HH933wqmu0z_S1IYP1aapa-Axz5jQ6IL72KAQjyc",
           "mode": "list",
           "cachedResultName": "Mock Data",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Km4HH933wqmu0z_S1IYP1aapa-Axz5jQ6IL72KAQjyc/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Km4HH933wqmu0z_S1IYP1aapa-Axz5jQ6ILfs72KAQjyc/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": 1855944367,
           "mode": "list",
           "cachedResultName": "Sheet2",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Km4HH933wqmu0z_S1IYP1aapa-Axz5jQ6IL72KAQjyc/edit#gid=1855944367"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Km4HH933wqmu0z_S1IYP1aapa-Axz5jQ6IL72rfsdKAQjyc/edit#gid=1855944367"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
