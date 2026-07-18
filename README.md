@@ -1,2 +1,2 @@
 # n8n-automation-workflows-sandbox
-A dedicated development and simulation environment for proof-of-concepts, architectural spikes, and logical testing. These workflows utilize mock datasets to validate complex data engineering patterns, advanced conditional routing, and error-handling mechanisms without impacting production systems or consuming active API limits.
+A growing collection of n8n automation workflows built with mock data, focused on classic automation logic — triggers, conditionals, data transformation, and integrations — without any AI/LLM components. Meant as a practical reference library for common automation patterns, separate from the AI-agent workflows in my other repo.
