@@ -1,0 +1,553 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "id"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "https://airtable.com/YOUR_AIRTABLE_BASE_ID/YOUR_AIRTABLE_TABLE_ID/YOUR_VIEW_ID?blocks=hide",
+          "mode": "url"
+        },
+        "triggerField": "Last Modified",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6e7d5b3e-c48f-48bc-9e88-dda9ae129a60",
+      "name": "getAirTableData",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR_AIRTABLE_CREDENTIAL_ID",
+          "name": "REPLACE_WITH_YOUR_CREDENTIAL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Airtable to Google Sheet",
+        "height": 368,
+        "width": 736,
+        "color": "#CB2053"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -128
+      ],
+      "id": "63eee7d9-0a96-4009-859a-57fcdaccb008",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Google Sheet to Airtable",
+        "height": 416,
+        "width": 736,
+        "color": "#357E36"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        240
+      ],
+      "id": "8499a8fe-84dd-4471-96b5-edcdf4baaf84",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -48,
+        400
+      ],
+      "id": "2077ee16-7b58-470a-b225-5f0cd1b41727",
+      "name": "every1Minute"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Data Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1619637121,
+          "mode": "list",
+          "cachedResultName": "forAirTable",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit#gid=1619637121"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        128,
+        400
+      ],
+      "id": "65542c97-5051-4f2e-bd5f-6718892b0529",
+      "name": "getGSheetData",
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "REPLACE_WITH_YOUR_CREDENTIAL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ea1c2af8-1949-4fc9-a4e4-37f7f2c60591",
+              "name": "Name",
+              "value": "={{ $json.Name }}",
+              "type": "string"
+            },
+            {
+              "id": "4af2b987-3e4d-46e2-9acc-dc27c1464714",
+              "name": "Email",
+              "value": "={{ $json.Email }}",
+              "type": "string"
+            },
+            {
+              "id": "e62bb672-f3f3-4d40-96fd-1c7c9e8decc0",
+              "name": "Status",
+              "value": "={{ $json.Status }}",
+              "type": "string"
+            },
+            {
+              "id": "f141f621-2118-4a52-9bde-f1c98fb204c2",
+              "name": "Amount",
+              "value": "={{ $json.Amount }}",
+              "type": "number"
+            },
+            {
+              "id": "b7d10cdc-590e-43f7-9dc4-04c630e1f7fa",
+              "name": "Last Update",
+              "value": "={{ $json['Last Update'] }}",
+              "type": "string"
+            },
+            {
+              "id": "f6bb82c7-9c1e-4141-b97c-f0ab8568c6ff",
+              "name": "Record ID",
+              "value": "={{ $json['Record ID'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        400
+      ],
+      "id": "d7f25d2b-cd62-429e-9e9d-1351b3e22666",
+      "name": "processGSheetData"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3fb4559f-54c3-4ac0-8270-f90eed6aed66",
+              "name": "Record ID",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "f3719ceb-2984-4979-87ae-5988e7e36e96",
+              "name": "Last Update",
+              "value": "={{ $json.fields['Last Update'] }}",
+              "type": "string"
+            },
+            {
+              "id": "56424390-a50e-4cab-9e0e-b045a7feccba",
+              "name": "Name",
+              "value": "={{ $json.fields.Name }}",
+              "type": "string"
+            },
+            {
+              "id": "46cf0414-bb07-4aca-9fd8-02b0b0e3ed13",
+              "name": "Email",
+              "value": "={{ $json.fields.Email }}",
+              "type": "string"
+            },
+            {
+              "id": "ad194862-2251-4827-bbf0-b404687d37d4",
+              "name": "Status",
+              "value": "={{ $json.fields.Status }}",
+              "type": "string"
+            },
+            {
+              "id": "bb5501a3-2bb6-4596-82ed-5336c242de97",
+              "name": "Amount",
+              "value": "={{ $json.fields.Amount }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fd2320ec-85ac-4839-abb9-38d3a38cd13e",
+      "name": "processAirtableData"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Data Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1619637121,
+          "mode": "list",
+          "cachedResultName": "forAirTable",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit#gid=1619637121"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "Record ID"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last Update",
+              "displayName": "Last Update",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        0
+      ],
+      "id": "d78c7193-fb70-48fc-b8e2-3ae630fb628c",
+      "name": "updateSheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "REPLACE_WITH_YOUR_CREDENTIAL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_BASE_ID",
+          "mode": "list",
+          "cachedResultName": "Customers",
+          "cachedResultUrl": "https://airtable.com/YOUR_AIRTABLE_BASE_ID"
+        },
+        "table": {
+          "__rl": true,
+          "value": "YOUR_AIRTABLE_TABLE_ID",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/YOUR_AIRTABLE_BASE_ID/YOUR_AIRTABLE_TABLE_ID"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Amount": "={{ $json.Amount }}",
+            "Name": "={{ $json.Name }}",
+            "Email": "={{ $json.Email }}",
+            "Status": "={{ $json.Status }}",
+            "Last Update": "={{ $json['Last Update'] }}",
+            "Record ID": "={{ $json['Record ID'] }}"
+          },
+          "matchingColumns": [
+            "Record ID"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Active",
+                  "value": "Active"
+                },
+                {
+                  "name": "Pending",
+                  "value": "Pending"
+                },
+                {
+                  "name": "Inactive",
+                  "value": "Inactive"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Update",
+              "displayName": "Last Update",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Record ID",
+              "displayName": "Record ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        400
+      ],
+      "id": "f3a61da8-cd3f-4a95-bad0-20ef9a376bef",
+      "name": "updateTable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YOUR_AIRTABLE_CREDENTIAL_ID",
+          "name": "REPLACE_WITH_YOUR_CREDENTIAL"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "getAirTableData": {
+      "main": [
+        [
+          {
+            "node": "processAirtableData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "every1Minute": {
+      "main": [
+        [
+          {
+            "node": "getGSheetData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getGSheetData": {
+      "main": [
+        [
+          {
+            "node": "processGSheetData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "processAirtableData": {
+      "main": [
+        [
+          {
+            "node": "updateSheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "processGSheetData": {
+      "main": [
+        [
+          {
+            "node": "updateTable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Manila",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1,
+    "availableInMCP": false
+  },
+  "versionId": "YOUR_VERSION_ID",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "nodeGroups": []
+}
