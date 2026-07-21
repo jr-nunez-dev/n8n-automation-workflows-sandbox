@@ -1,0 +1,71 @@
+{
+  "name": "Sales-Mock-Provisioning",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eec0b608-e934-4909-b3e6-189739f43467",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        0
+      ],
+      "id": "37279e6d-cdaa-4622-bb76-e189d6109b5a",
+      "name": "mockTrigger",
+      "webhookId": "eec0b608-e934-4909-b3e6-189739f43467"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"success\",\n  \"department\": \"Sales\",\n  \"message\": \"Mock account created\",\n  \"receivedData\": {{ JSON.stringify($json.body) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        208,
+        0
+      ],
+      "id": "75609333-5d2d-4a13-aba0-8bdbfa2f5683",
+      "name": "respondToMainWorkflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "mockTrigger": {
+      "main": [
+        [
+          {
+            "node": "respondToMainWorkflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "53fdc86c-32e4-48b7-b768-79095e1cb53b",
+  "meta": {
+    "instanceId": "a6e0c81e4fb59b429c00e146454cbad9c9647be357aed7cbe1314bb7130321d6"
+  },
+  "nodeGroups": [],
+  "id": "ZBjnnYFFdwubbNRt",
+  "tags": [
+    {
+      "name": "Mock",
+      "id": "PCceafPNPavXHCKp",
+      "updatedAt": "2026-07-20T13:22:36.268Z",
+      "createdAt": "2026-07-20T13:22:36.268Z"
+    }
+  ]
+}

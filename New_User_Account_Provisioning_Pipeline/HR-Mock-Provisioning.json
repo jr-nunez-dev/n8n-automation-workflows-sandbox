@@ -1,0 +1,71 @@
+{
+  "name": "HR-Mock-Provisioning",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fb179ebf-f079-4b57-baba-4cd97397881b",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1667840b-9544-4bac-8c67-d574e23f125b",
+      "name": "mockTrigger",
+      "webhookId": "fb179ebf-f079-4b57-baba-4cd97397881b"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"success\",\n  \"department\": \"Human Resources\",\n  \"message\": \"Mock account created\",\n  \"receivedData\": {{ JSON.stringify($json.body) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        208,
+        0
+      ],
+      "id": "855a3197-1e46-41a1-9710-a2be4a80b144",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "mockTrigger": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "88040776-7480-4743-9f20-6dc45dabb02d",
+  "meta": {
+    "instanceId": "a6e0c81e4fb59b429c00e146454cbad9c9647be357aed7cbe1314bb7130321d6"
+  },
+  "nodeGroups": [],
+  "id": "WSRBJh0wMBpGlgmt",
+  "tags": [
+    {
+      "name": "Mock",
+      "id": "PCceafPNPavXHCKp",
+      "updatedAt": "2026-07-20T13:22:36.268Z",
+      "createdAt": "2026-07-20T13:22:36.268Z"
+    }
+  ]
+}
