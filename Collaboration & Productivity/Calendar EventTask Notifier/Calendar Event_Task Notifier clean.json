@@ -1,0 +1,206 @@
+{
+  "name": "Calendar Event/Task Notifier clean",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -144,
+        -128
+      ],
+      "id": "d670f882-578d-4c7e-aa49-f16208875b28",
+      "name": "every5Mins"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "",
+          "mode": "id"
+        },
+        "limit": 10,
+        "timeMax": "={{ $now.plus({ day: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        32,
+        -128
+      ],
+      "id": "28804441-e423-4adc-b68d-fa4d11f888a5",
+      "name": "getEvents",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "UkLYJ0j8dlBdoFrm",
+          "name": "Calendar Clean"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f1e92c27-0db2-47f0-9162-d31f1b15e720",
+              "leftValue": "={{ $json.eventType }}",
+              "rightValue": "default",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        -128
+      ],
+      "id": "fcdae6d6-4ce5-45fe-a42d-f60448c63d19",
+      "name": "eventType"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        },
+        "text": "=This is an Event Notification!\n\nTitle: {{ $json.summary }}\n\nMessage: {{ $json.description }}\n\nWhen: {{ $json.start.dateTime.toDateTime().format('MMMM dd, yyyy : hh:mm a') }}\nUntil: {{ $json.end.dateTime.toDateTime().format('MMMM dd, yyyy : hh:mm a') }}\n\n",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        432,
+        -240
+      ],
+      "id": "26288594-1ac3-40b6-b11e-cc035b7b1019",
+      "name": "eventMessage",
+      "webhookId": "288cc493-7822-46fa-9e20-465bdf5f9693",
+      "credentials": {
+        "slackApi": {
+          "id": "Wwm0VjnokGLQ1vSE",
+          "name": "Slack Clean"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        },
+        "text": "=This is a Task Notification:\n\nTitle: {{ $json.summary }}\n\n\nTeam,\n\nKindly accomplish your tasks on or before {{ $json.end.dateTime.toDateTime().format('MMMM dd, yyyy : hh:mm a') }}.\n\n\nRegards,\n{{ $json.organizer.email.slice(0,7) }}\n",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        432,
+        -32
+      ],
+      "id": "0b644a77-a4ce-4253-ba19-116f0f286978",
+      "name": "taskMessage",
+      "webhookId": "63fbea88-b170-450e-a076-d2bf3e01bb32",
+      "credentials": {
+        "slackApi": {
+          "id": "Wwm0VjnokGLQ1vSE",
+          "name": "Slack Clean"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "every5Mins": {
+      "main": [
+        [
+          {
+            "node": "getEvents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getEvents": {
+      "main": [
+        [
+          {
+            "node": "eventType",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "eventType": {
+      "main": [
+        [
+          {
+            "node": "eventMessage",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "taskMessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Manila",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "7dbca533-6af6-4636-b06b-6c31c06f5c96",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "msnfgajrsgjrjt8569qict98q3mndlbksdlghspkt"
+  },
+  "nodeGroups": [],
+  "id": "aadnkfghsghlmdfbmrdij",
+  "tags": []
+}
